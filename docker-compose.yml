@@ -8,24 +8,25 @@ services:
       - ./:/node-app
       - /node-app/node_modules
     command: npm run dev
-    environment:
-      - MONGO_USERNAME=fundo
-      - MONG_PASSWORD=password
     depends_on:
       - mongo
 
   mongo:
     image: mongo
-    ports:
-      - "8081:8081"
     volumes:
       - db-volume:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: fundo
-      MONGO_INITDB_ROOT_PASSWORD: password
+      - MONGO_INITDB_ROOT_USERNAME=fundo
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    depends_on:
+      - redis
 
   redis:
     image: redis
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=fundo
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - REDIS_SECRET=secret
 
 volumes:
   db-volume:
