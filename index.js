@@ -120,7 +120,8 @@ app.post("/api/v1/auth/sign-in", async (req, res) => {
 
   try {
     const user_data = await Add_user.findOne({ username });
-    if (!user_data) return console.log("No user found");
+    if (!user_data)
+      return res.status(200).json({ status: "fail", message: "No user found" });
     bcrypt.compare(password, user_data.password, async (err, result) => {
       if (err)
         return res.status(400).json({
