@@ -4,10 +4,10 @@ services:
     build: .
     ports:
       - "3000:3000"
-    volumes:
-      - ./:/node-app
-      - /node-app/node_modules
-    command: npm run dev
+    # volumes:
+    # - ./:/node-app
+    # - /node-app/node_modules
+    command: node index.js
     depends_on:
       - mongo
 
