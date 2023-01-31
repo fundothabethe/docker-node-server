@@ -76,6 +76,7 @@ app.post("/api/v1/auth/sign-up", async (req, res) => {
   const { username, password } = req.body;
   bcrypt.hash(password, saltRounds, async (err, hash) => {
     if (err) {
+	console.log(err);
       return res.status(400).json({
         status: "fail",
         data: "Failed to hash password",

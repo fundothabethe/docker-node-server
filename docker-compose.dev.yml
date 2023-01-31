@@ -1,0 +1,32 @@
+version: "1"
+services:
+  node-app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/node-app
+      - /node-app/node_modules
+    command: npm run dev
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    volumes:
+      - db-volume:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=fundo
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=fundo
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - REDIS_SECRET=secret
+
+volumes:
+  db-volume:
